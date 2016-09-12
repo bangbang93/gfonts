@@ -86,3 +86,5 @@ jspm_packages
 public/ajax
 public/css
 public/s
+public/http
+public/https
