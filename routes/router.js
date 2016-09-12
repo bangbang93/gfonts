@@ -3,7 +3,7 @@
  */
 'use strict';
 const router = require('express').Router();
-const request = require('superagent');
+const request = require('co-request');
 const co = require('co');
 const fs = require('co-fs');
 const path = require('path');
@@ -11,7 +11,7 @@ const mkdirp = require('co-mkdirp');
 const publicDir = path.resolve(__dirname, '../public');
 const helper = require('../helper/replace');
 
-router.get(['/css/*', '/css'], function (req, res, next) {
+router.get('/css', function (req, res, next) {
   let url = req.url;
   let https = Boolean(req.get('isHttps'));
   let file = path.join(publicDir, `css/${https?'https':'http'}/${encodeURIComponent(url.substr(5))}`);
@@ -19,20 +19,16 @@ router.get(['/css/*', '/css'], function (req, res, next) {
     if (yield fs.exists(file)){
       res.type('css').sendFile(file);
     } else {
-      try{
-        let response = yield request.get('https://fonts.googleapis.com' + url);
-        let style = helper.replaceBody(response.text);
-        res.type('css').send(style);
-        if (! (yield fs.exists(path.dirname(file)))){
-          yield mkdirp(path.dirname(file));
-        }
-        yield fs.writeFile(file, style);
-      } catch(e){
-        if (e.status){
-          return res.status(e.status).send(e.response.text);
-        }
-        throw e;
+      let response = yield request.get('https://fonts.googleapis.com' + url);
+      if (response.statusCode != 200){
+        return res.status(response.statusCode).send(response.body);
       }
+      let style = helper.replaceBody(response.body);
+      res.type('css').send(style);
+      if (! (yield fs.exists(path.dirname(file)))){
+        yield mkdirp(path.dirname(file));
+      }
+      yield fs.writeFile(file, style);
     }
   })
     .catch(next);
@@ -45,20 +41,16 @@ router.get('/s/*', function (req, res, next) {
     if (yield fs.exists(file)){
       res.type('font').sendFile(file);
     } else {
-      try {
-        let response = yield request.get('https://fonts.googleapis.com' + url);
-        let font = response.text;
-        res.type('font').send(font);
-        if (! (yield fs.exists(path.dirname(file)))){
-          yield mkdirp(path.dirname(file));
-        }
-        yield fs.writeFile(file, font);
-      } catch(e){
-        if (e.status){
-          return res.status(e.status).send(e.response.text);
-        }
-        throw e;
+      let response = yield request.get('https://fonts.gstatic.com' + url);
+      if (response.statusCode != 200){
+        return res.status(response.statusCode).send(response.body);
       }
+      let font = response.body;
+      res.type('font').send(font);
+      if (! (yield fs.exists(path.dirname(file)))){
+        yield mkdirp(path.dirname(file));
+      }
+      yield fs.writeFile(file, font);
     }
   })
     .catch(next);
@@ -71,23 +63,16 @@ router.get('/ajax/*', function (req, res, next) {
     if (yield fs.exists(file)){
       res.type('js').sendFile(file);
     } else {
-      try {
-        let response = yield request.get('https://ajax.googleapis.com' + url);
-        if (response.statusCode != 200){
-          return res.sendStatus(404);
-        }
-        let font = response.text;
-        res.type('js').send(font);
-        if (! (yield fs.exists(path.dirname(file)))){
-          yield mkdirp(path.dirname(file));
-        }
-        yield fs.writeFile(file, font);
-      } catch(e){
-        if (e.status){
-          return res.status(e.status).send(e.response.text);
-        }
-        throw e;
+      let response = yield request.get('https://ajax.googleapis.com' + url);
+      if (response.statusCode != 200){
+        return res.status(response.statusCode).send(response.body);
       }
+      let font = response.body;
+      res.type('js').send(font);
+      if (! (yield fs.exists(path.dirname(file)))){
+        yield mkdirp(path.dirname(file));
+      }
+      yield fs.writeFile(file, font);
     }
   })
     .catch(next);
