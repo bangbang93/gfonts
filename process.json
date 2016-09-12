@@ -1,0 +1,9 @@
+{
+  "apps":[{
+    "name": "gfonts",
+    "env": {
+      "port": 4000,
+      "NODE_ENV": "production"
+    }
+  }]
+}
