@@ -3,7 +3,7 @@
     "name": "gfonts",
     "script": "bin/www",
     "env": {
-      "port": 4000,
+      "PORT": 4000,
       "NODE_ENV": "production"
     }
   }]
