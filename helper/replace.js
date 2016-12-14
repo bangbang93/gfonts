@@ -6,9 +6,9 @@
 const host = 'libs.bangbang93.com';
 
 exports.replaceBody = function (body) {
-  body = body.replace('ajax.googleapis.com', host);
-  body = body.replace('ajax.gstatic.com', host);
-  body = body.replace('fonts.googleapis.com', host);
-  body = body.replace('fonts.gstatic.com', host);
+  body = body.replace(new RegExp('ajax.googleapis.com', 'g'), host);
+  body = body.replace(new RegExp('ajax.gstatic.com', 'g'), host);
+  body = body.replace(new RegExp('fonts.googleapis.com', 'g'), host);
+  body = body.replace(new RegExp('fonts.gstatic.com', 'g'), host);
   return body;
 };
