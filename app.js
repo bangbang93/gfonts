@@ -8,7 +8,12 @@ var router = require('./routes/router');
 
 var app = express();
 
-app.use(logger('dev'));
+if (app.get('env') == 'development'){
+  app.use(logger('dev'));
+} else {
+  app.use(logger('combined'));
+}
+
 app.use(helmet.hidePoweredBy());
 app.use(express.static(path.join(__dirname, 'public'), {
   redirect: false
