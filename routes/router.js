@@ -41,7 +41,7 @@ router.get('/s/*', function (req, res, next) {
     if (yield fs.exists(file)){
       res.type('font').sendFile(file);
     } else {
-      let response = yield request.get('https://fonts.gstatic.com' + url);
+      let response = yield request.get('https://fonts.gstatic.com' + url, {encoding: null});
       if (response.statusCode != 200){
         return res.status(response.statusCode).send(response.body);
       }
