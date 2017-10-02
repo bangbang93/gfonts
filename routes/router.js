@@ -8,12 +8,14 @@ const fs = require('fs-extra');
 const path = require('path');
 const mkdirp = require('co-mkdirp');
 const publicDir = path.resolve(__dirname, '../public');
-const helper = require('../helper/replace');
+const ReplaceHelper = require('../helper/replace');
+const HashHelper = require('../helper/hash')
+
 
 router.get('/css', async function (req, res) {
-  let url = req.url;
+  let url = req.url.toLowerCase();
   let https = Boolean(req.get('isHttps'));
-  let file = path.join(publicDir, `css/${https?'https':'http'}/${encodeURIComponent(url.substr(5))}`);
+  let file = path.join(publicDir, `css/${https?'https':'http'}/${HashHelper.md5(url.substr(5))}`);
   if (await fs.exists(file)){
     res.type('css').sendFile(file);
   } else {
@@ -21,7 +23,7 @@ router.get('/css', async function (req, res) {
     if (response.statusCode !== 200){
       return res.status(response.statusCode).send(response.body);
     }
-    let style = helper.replaceBody(response.body);
+    let style = ReplaceHelper.replaceBody(response.body);
     res.type('css').send(style);
     if (! (await fs.exists(path.dirname(file)))){
       await mkdirp(path.dirname(file));
