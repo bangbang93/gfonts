@@ -2,7 +2,7 @@
  * Created by bangbang93 on 16/9/12.
  */
 'use strict';
-const router = require('express-promise-router');
+const router = require('express-promise-router')();
 const request = require('co-request');
 const fs = require('fs-extra');
 const path = require('path');
