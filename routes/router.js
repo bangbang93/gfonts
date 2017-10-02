@@ -19,7 +19,6 @@ router.get('/css', async function (req, res) {
   if (await fs.exists(file)){
     res.type('css').sendFile(file);
   } else {
-    console.log('https://fonts.googleapis.com' + url)
     let response = await request.get('https://fonts.googleapis.com' + url);
     if (response.statusCode !== 200){
       return res.status(response.statusCode).send(response.body);
