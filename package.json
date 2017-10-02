@@ -6,8 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "co": "^4.6.0",
-    "co-fs": "^1.2.0",
     "co-mkdirp": "^0.1.0",
     "co-request": "^1.0.0",
     "debug": "~2.2.0",
