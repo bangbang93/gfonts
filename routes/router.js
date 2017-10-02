@@ -13,7 +13,7 @@ const HashHelper = require('../helper/hash')
 
 
 router.get('/css', async function (req, res) {
-  let url = req.url.toLowerCase();
+  let url = req.url;
   let https = Boolean(req.get('isHttps'));
   let file = path.join(publicDir, `css/${https?'https':'http'}/${HashHelper.md5(url.substr(5))}`);
   if (await fs.exists(file)){
