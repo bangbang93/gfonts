@@ -8,12 +8,12 @@
   "dependencies": {
     "co-mkdirp": "^0.1.0",
     "co-request": "^1.0.0",
-    "debug": "~2.2.0",
-    "ejs": "~2.4.1",
-    "express": "~4.13.4",
+    "debug": "~3.1.0",
+    "ejs": "~2.5.7",
+    "express": "~4.16.2",
     "express-promise-router": "^2.0.0",
     "fs-extra": "^4.0.2",
-    "helmet": "^2.1.3",
-    "morgan": "~1.7.0"
+    "helmet": "^3.9.0",
+    "morgan": "~1.9.0"
   }
 }
