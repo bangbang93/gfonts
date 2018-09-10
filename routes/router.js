@@ -11,10 +11,10 @@ const ReplaceHelper = require('../helper/replace');
 const HashHelper = require('../helper/hash')
 
 
-router.get('/css', async function (req, res) {
+router.get('/:cssType(css|icon)', async function (req, res) {
   let url = req.url;
   let https = Boolean(req.get('isHttps'));
-  let file = path.join(publicDir, `css/${https?'https':'http'}/${HashHelper.md5(url.substr(5))}`);
+  let file = path.join(publicDir, `${req.params.cssType}/${https?'https':'http'}/${HashHelper.md5(url.substr(5))}`);
   if (await fs.pathExists(file)){
     res.type('css').sendFile(file);
   } else {
