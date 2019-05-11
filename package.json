@@ -10,13 +10,13 @@
     "express": "^4.16.3",
     "express-promise-router": "^3.0.2",
     "fs-extra": "^4.0.2",
+    "got": "^9.6.0",
     "helmet": "^3.13.0",
-    "morgan": "^1.9.0",
-    "request": "^2.85.0",
-    "request-promise": "^4.2.2"
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.2",
+    "@types/got": "^8.3.4",
     "@types/request-promise": "^4.1.41"
   }
 }

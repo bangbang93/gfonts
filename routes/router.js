@@ -3,7 +3,7 @@
  */
 'use strict';
 const router = require('express-promise-router')();
-const request = require('request-promise');
+const got = require('got');
 const fs = require('fs-extra');
 const path = require('path');
 const publicDir = path.resolve(__dirname, '../public');
@@ -18,15 +18,17 @@ router.get('/:cssType(css|icon)', async function (req, res) {
   if (await fs.pathExists(file)){
     res.type('css').sendFile(file);
   } else {
-    let response = await request.get('https://fonts.googleapis.com' + url, {resolveWithFullResponse: true});
-    if (response.statusCode !== 200){
-      return res.status(response.statusCode).type(response.headers['content-type']).send(response.body);
+    try {
+      let response = await got('https://fonts.googleapis.com' + url);
+
+      let style = ReplaceHelper.replaceBody(response.body);
+      res.type('css').send(style);
+
+      await fs.outputFile(file, style);
+    } catch (e) {
+      console.log(e)
+      return res.status(e.statusCode).type(e.headers['content-type']).send(e.body);
     }
-
-    let style = ReplaceHelper.replaceBody(response.body);
-    res.type('css').send(style);
-
-    await fs.outputFile(file, style);
   }
 });
 
@@ -36,15 +38,17 @@ router.get('/s/*', async function (req, res) {
     if (await fs.pathExists(file)){
       res.type('font').sendFile(file);
     } else {
-      let response = await request.get('https://fonts.gstatic.com' + url, {encoding: null, resolveWithFullResponse: true});
-      if (response.statusCode !== 200){
-        return res.status(response.statusCode).type(response.headers['content-type']).send(response.body);
+      try {
+        let response = await got('https://fonts.gstatic.com' + url, {encoding: null});
+
+
+        let font = response.body;
+        res.type('font').send(font);
+
+        await fs.outputFile(file, font);
+      } catch (e) {
+        return res.status(e.statusCode).type(e.headers['content-type']).send(e.body);
       }
-
-      let font = response.body;
-      res.type('font').send(font);
-
-      await fs.outputFile(file, font);
     }
 });
 
@@ -54,15 +58,16 @@ router.get('/ajax/*', async function (req, res) {
   if (await fs.pathExists(file)){
     res.type('js').sendFile(file);
   } else {
-    let response = await request.get('https://ajax.googleapis.com' + url, {resolveWithFullResponse: true});
-    if (response.statusCode !== 200){
-      return res.status(response.statusCode).type(response.headers['content-type']).send(response.body);
+    try {
+      let response = await got('https://ajax.googleapis.com' + url, {resolveWithFullResponse: true});
+
+      let font = response.body;
+      res.type('js').send(font);
+
+      await fs.outputFile(file, font);
+    } catch (e) {
+      return res.status(e.statusCode).type(e.headers['content-type']).send(e.body);
     }
-
-    let font = response.body;
-    res.type('js').send(font);
-
-    await fs.outputFile(file, font);
   }
 });
 
