@@ -1,0 +1,11 @@
+services:
+  gfonts:
+    image: bangbang93-docker.pkg.coding.net/registry/bangbang93/gfonts:latest
+    ports:
+      - "4000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - public:/opt/gfonts/public
+    restart: unless-stopped
