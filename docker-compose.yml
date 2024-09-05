@@ -7,5 +7,5 @@ services:
       - NODE_ENV=production
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - public:/opt/gfonts/public
+      - ./public:/opt/gfonts/public
     restart: unless-stopped
