@@ -1,0 +1,10 @@
+npm:
+  publish: false
+git:
+  commit: true
+  commitMessage: 'chore(release): v${version}'
+  push: true
+  tag: true
+  tagName: v${version}
+hooks:
+  after:version:bump: auto-changelog -p
