@@ -26,11 +26,11 @@ jobs:
         uses: docker/build-push-action@v5
         env:
           IMAGE_TAG: ${{ env.GIT_TAG }}
-          CODING_IMAGE_NAME: bangbang93/gfonts
+          IMAGE_NAME: bangbang93/gfonts
         with:
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: |
-            ${{ env.CODING_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            ${{ env.CODING_IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ env.IMAGE_NAME }}:latest
