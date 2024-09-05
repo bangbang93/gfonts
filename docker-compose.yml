@@ -1,6 +1,6 @@
 services:
   gfonts:
-    image: bangbang93-docker.pkg.coding.net/registry/bangbang93/gfonts:latest
+    image: bangbang93/gfonts:latest
     ports:
       - "4000:3000"
     environment:
