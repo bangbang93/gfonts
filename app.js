@@ -2,11 +2,14 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var helmet = require('helmet');
+var cors = require('cors');
 
 var routes = require('./routes/index');
 var router = require('./routes/router');
 
 var app = express();
+
+app.use(cors());
 
 if (app.get('env') == 'development'){
   app.use(logger('dev'));

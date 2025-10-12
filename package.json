@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "debug": "^3.1.0",
     "express": "^4.21.2",
     "express-promise-router": "^3.0.2",
@@ -15,6 +16,7 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/fs-extra": "^5.0.2",
     "@types/got": "^8.3.4",
     "@types/request-promise": "^4.1.41"
