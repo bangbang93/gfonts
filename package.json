@@ -13,7 +13,7 @@
     "fs-extra": "^4.0.2",
     "got": "^11.8.5",
     "helmet": "^3.23.3",
-    "morgan": "^1.10.1"
+    "morgan": "^1.11.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
